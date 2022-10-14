@@ -1,0 +1,59 @@
+DATA OVERVIEW
+
+SELECT * FROM `data-analysis-project-365407.cfpb_consumer_complaint_database.complaint_database` LIMIT 1000
+
+
+COUNT OF DATA
+ELECT count(*) FROM `data-analysis-project-365407.cfpb_consumer_complaint_database.complaint_database` 
+
+
+COMPANIES THAT FAILED TO ASK FOR CONSENT IN DESCENDING ORDER.
+
+SELECT
+  company_name,
+  COUNT(DISTINCT(complaint_id)) AS count_complaints
+FROM
+  `bigquery-public-data.cfpb_complaints.complaint_database` 
+WHERE
+ consumer_consent_provided = 'Consent not provided'
+GROUP BY
+  company_name
+ORDER BY
+  count_complaints desc
+  
+  
+COMPANIES WITH THE HIGHEST NO OF DEFAULTS
+
+SELECT
+  company_name,
+  COUNT(DISTINCT(complaint_id)) AS count_complaints
+FROM
+  `bigquery-public-data.cfpb_complaints.complaint_database` 
+WHERE
+  timely_response = false
+GROUP BY
+  company_name
+ORDER BY
+  count_complaints desc
+  
+  
+STATE WITH THE HIGHEST COUNT OF UNCONSENTED REPORTS
+
+SELECT
+  state,
+  COUNT(DISTINCT(complaint_id)) AS count_complaints
+FROM
+  `bigquery-public-data.cfpb_complaints.complaint_database` 
+WHERE
+ consumer_consent_provided = 'Consent not provided'
+GROUP BY
+  state
+ORDER BY
+  count_complaints desc
+  
+  
+COMPANIES WITH A HIGH LEVEL OF NON-CONSENTED REPORTS
+
+select * from `bigquery-public-data.cfpb_complaints.complaint_database` where company_name = 'EQUIFAX, INC.'
+
+
